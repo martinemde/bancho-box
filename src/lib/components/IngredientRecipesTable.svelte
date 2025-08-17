@@ -2,10 +2,13 @@
   import PixelIcon from '$lib/ui/PixelIcon.svelte';
   import type { Ingredient } from '$lib/types.js';
 
-  let { ingredient, formatNumber }: { ingredient: Ingredient; formatNumber: (n: number | null | undefined) => string } = $props();
+  let {
+    ingredient,
+    formatNumber
+  }: { ingredient: Ingredient; formatNumber: (n: number | null | undefined) => string } = $props();
 </script>
 
-<div class="overflow-x-auto mt-2 -mx-4">
+<div class="-mx-4 mt-2 overflow-x-auto">
   <table class="w-full table-auto text-sm">
     <thead class="bg-surface-200-800">
       <tr>
@@ -22,7 +25,7 @@
     <tbody>
       {#each ingredient.usedIn as row (row.dishId)}
         <tr class="border-b border-surface-200-800">
-          <td class="pl-4 w-8">
+          <td class="w-8 pl-4">
             <div class="relative" style="width: 32px; height: 32px">
               <PixelIcon image={row.dishImage} alt={row.dishName} uiScale={0.5} />
             </div>
@@ -40,5 +43,3 @@
     </tbody>
   </table>
 </div>
-
-

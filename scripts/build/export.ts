@@ -19,12 +19,17 @@ export function exportData(args: {
 
   const version = 'v1';
 
-
   // Overwrite v1 files with bundled forms where applicable
   writeFileSync(join(outputDir, `dishes.${version}.json`), JSON.stringify(dishesBundle, null, 2));
-  writeFileSync(join(outputDir, `ingredients.${version}.json`), JSON.stringify(ingredientsBundle, null, 2));
+  writeFileSync(
+    join(outputDir, `ingredients.${version}.json`),
+    JSON.stringify(ingredientsBundle, null, 2)
+  );
   writeFileSync(join(outputDir, `parties.${version}.json`), JSON.stringify(partiesBundle, null, 2));
-  writeFileSync(join(outputDir, `party-dishes.${version}.json`), JSON.stringify(partyDishesBundle, null, 2));
+  writeFileSync(
+    join(outputDir, `party-dishes.${version}.json`),
+    JSON.stringify(partyDishesBundle, null, 2)
+  );
 
   console.log(`${partiesBundle.rows.length}\tParties`);
   console.log(`${partyDishesBundle.rows.length}\tParty-dishes`);

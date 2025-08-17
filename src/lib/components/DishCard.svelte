@@ -4,7 +4,7 @@
   import ProfitTable from './ProfitTable.svelte';
   import TrackButton from './TrackButton.svelte';
   import { trackedDishIds } from '$lib/stores/tracking.js';
-	import { PartyPopper } from '@lucide/svelte';
+  import { PartyPopper } from '@lucide/svelte';
   import { partyDishByIdStore } from '$lib/stores/partyDishes.js';
   import RecipeSummaryIcons from './RecipeSummaryIcons.svelte';
   import PixelIcon from '../ui/PixelIcon.svelte';
@@ -57,11 +57,14 @@
     const next = e.value as string[];
     value = next;
     if (next?.includes('recipe')) ensureRecipePanelLoaded();
-    if (next?.some((v) => typeof v === 'string' && v.startsWith('party-'))) ensurePartyDishPanelLoaded();
+    if (next?.some((v) => typeof v === 'string' && v.startsWith('party-')))
+      ensurePartyDishPanelLoaded();
   }
 </script>
 
-<article class="card preset-filled-surface-100-900 border border-surface-200-800 divide-y divide-surface-200-800 min-w-40 max-w-100">
+<article
+  class="max-w-100 min-w-40 divide-y divide-surface-200-800 card border border-surface-200-800 preset-filled-surface-100-900"
+>
   <!-- Section 1: Overview -->
   <section class="p-4">
     <div class="flex items-start gap-4">
@@ -73,33 +76,44 @@
         <div class="mt-2" style="width: {thumbPx}px">
           {#if dish?.id != null}
             {@const isTracked = $trackedDishIds.has(dish.id)}
-            <TrackButton
-              checked={isTracked}
-              on:change={onTrackChange}
-            />
+            <TrackButton checked={isTracked} on:change={onTrackChange} />
           {/if}
         </div>
 
-        <div class="text-center flex items-center gap-1">
-            <img class="object-contain w-4 h-4" src={levelImage} alt="Max Level" loading="lazy" decoding="async" width={iconPx} height={iconPx} />
-           <span class="font-semibold">{dish.maxLevel}</span>
+        <div class="flex items-center gap-1 text-center">
+          <img
+            class="h-4 w-4 object-contain"
+            src={levelImage}
+            alt="Max Level"
+            loading="lazy"
+            decoding="async"
+            width={iconPx}
+            height={iconPx}
+          />
+          <span class="font-semibold">{dish.maxLevel}</span>
         </div>
 
-        <div class="text-center flex items-center gap-1">
-            <img class="object-contain w-4 h-4" src={tasteImage} alt="Taste" loading="lazy" decoding="async" width={iconPx} height={iconPx} />
-            <span class="font-semibold">{dish.finalTaste}</span>
+        <div class="flex items-center gap-1 text-center">
+          <img
+            class="h-4 w-4 object-contain"
+            src={tasteImage}
+            alt="Taste"
+            loading="lazy"
+            decoding="async"
+            width={iconPx}
+            height={iconPx}
+          />
+          <span class="font-semibold">{dish.finalTaste}</span>
         </div>
       </div>
 
-
-
-      <div class="flex-1 min-w-0 space-y-4">
+      <div class="min-w-0 flex-1 space-y-4">
         <header>
-          <div class="font-semibold text-base truncate">{dish.name}</div>
-          <div class="text-sm opacity-70 truncate mt-0.5">{dish.unlock || '—'}</div>
+          <div class="truncate text-base font-semibold">{dish.name}</div>
+          <div class="mt-0.5 truncate text-sm opacity-70">{dish.unlock || '—'}</div>
         </header>
 
-        <ProfitTable dish={dish} />
+        <ProfitTable {dish} />
       </div>
     </div>
   </section>
@@ -107,9 +121,12 @@
   <!-- Section 2 & 3: Collapsible Recipe and Parties -->
   <section>
     <Accordion {value} onValueChange={onAccordionValueChange} multiple collapsible>
-      <Accordion.Item value="recipe" controlHover="hover:preset-filled-primary-900-100 hover:text-primary-200-800">
+      <Accordion.Item
+        value="recipe"
+        controlHover="hover:preset-filled-primary-900-100 hover:text-primary-200-800"
+      >
         {#snippet control()}
-          <RecipeSummaryIcons dish={dish} />
+          <RecipeSummaryIcons {dish} />
         {/snippet}
 
         {#snippet panel()}
@@ -122,7 +139,11 @@
       </Accordion.Item>
 
       {#each partyDishesMeta as meta (meta.id)}
-        <Accordion.Item value={`party-${meta.partyId}`} controlHover="hover:preset-filled-primary-900-100 hover:text-primary-300-700" classes="border-t border-surface-200-800">
+        <Accordion.Item
+          value={`party-${meta.partyId}`}
+          controlHover="hover:preset-filled-primary-900-100 hover:text-primary-300-700"
+          classes="border-t border-surface-200-800"
+        >
           {#snippet lead()}
             <PartyPopper size={16} />
           {/snippet}

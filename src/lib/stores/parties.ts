@@ -3,7 +3,7 @@ import type { EnrichedParty } from '$lib/types.js';
 
 export const partiesStores = createEntityStores<EnrichedParty>({
   sortKey: 'order',
-  sortDir: 'asc',
+  sortDir: 'asc'
 });
 
 export const bundle = partiesStores.bundle;

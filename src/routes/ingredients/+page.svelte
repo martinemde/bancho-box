@@ -15,7 +15,7 @@
     { value: 'kg', label: 'Weight (kg)' },
     { value: 'sell', label: 'Sell' },
     { value: 'sellPerKg', label: 'Sell / kg' },
-    { value: 'buy', label: 'Purchase' },
+    { value: 'buy', label: 'Purchase' }
   ];
 
   // Virtualization state
@@ -64,34 +64,45 @@
       recalcFromScrollTop(viewport?.scrollTop ?? 0);
     });
   }
-
 </script>
 
 <svelte:head>
   <title>Ingredients - Bancho Box</title>
-  <meta name="description" content="Complete ingredient analysis from Dave the Diver with profitability metrics" />
+  <meta
+    name="description"
+    content="Complete ingredient analysis from Dave the Diver with profitability metrics"
+  />
 </svelte:head>
 
 <ResponsiveLayout leftTitle="Filters & sort" containerClass="ingredients" scrollMode="page">
   {#snippet left()}
     <FiltersPanel
-      bundle={bundle}
+      {bundle}
       {filters}
       bind:query={$query}
       bind:sortKey={$sortKey as string}
       bind:sortDir={$sortDir}
-      sortOptions={sortOptions}
+      {sortOptions}
       searchPlaceholder="Search ingredients by name, source, type, time, drone…"
     />
   {/snippet}
 
   {#snippet content()}
     <div class="flex flex-col gap-4">
-      <ResultsHeader visible={visible} entityLabel="Ingredients" bind:sortKey={$sortKey as string} bind:sortDir={$sortDir} sortOptions={sortOptions} />
+      <ResultsHeader
+        {visible}
+        entityLabel="Ingredients"
+        bind:sortKey={$sortKey as string}
+        bind:sortDir={$sortDir}
+        {sortOptions}
+      />
       <div class="h-[70dvh] md:h-full">
         <div bind:this={viewport} class="h-full overflow-y-auto" onscroll={onScroll}>
           {#key `${startIndex}-${endIndex}-${$visible.length}`}
-            <div class="flex flex-col gap-4" style={`padding-top: ${startIndex * estimatedItemHeight}px; padding-bottom: ${Math.max(0, ($visible.length - endIndex) * estimatedItemHeight)}px;`}>
+            <div
+              class="flex flex-col gap-4"
+              style={`padding-top: ${startIndex * estimatedItemHeight}px; padding-bottom: ${Math.max(0, ($visible.length - endIndex) * estimatedItemHeight)}px;`}
+            >
               {#each $visible.slice(startIndex, endIndex) as ingredient (ingredient.id)}
                 <IngredientCard {ingredient} />
               {/each}

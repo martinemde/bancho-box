@@ -16,17 +16,17 @@
 
 <button
   type="button"
-  class="btn inline-flex w-full justify-start items-center preset-filled-surface-500"
+  class="btn inline-flex w-full items-center justify-start preset-filled-surface-500"
   aria-pressed={checked}
-  disabled={disabled}
+  {disabled}
   on:click={toggle}
 >
   <input
     type="checkbox"
-    bind:checked={checked}
+    bind:checked
     tabindex="-1"
     aria-hidden="true"
-    class="checkbox size-4 pointer-events-none"
+    class="pointer-events-none checkbox size-4"
   />
   <span class="text-sm">{label}</span>
 </button>

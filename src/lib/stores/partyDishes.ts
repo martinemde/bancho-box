@@ -6,28 +6,37 @@ export type PartyDishesBundle = EntityBundle<PartyDish>;
 
 export const partyDishesStores = createEntityStores<PartyDish>({
   sortKey: 'profitPerServing',
-  sortDir: 'desc',
+  sortDir: 'desc'
 });
 
 export const bundle = partyDishesStores.bundle;
 
-export type PartiesDishSubBundle = { rows: PartyDish[]; byId: Record<Id, PartyDish>; facets: Record<string, Record<string, Id[]>> };
+export type PartiesDishSubBundle = {
+  rows: PartyDish[];
+  byId: Record<Id, PartyDish>;
+  facets: Record<string, Record<string, Id[]>>;
+};
 
 export function createPartyDishesStores(subBundle: PartiesDishSubBundle) {
   return createEntityStores<PartyDish>({
     bundle: subBundle,
     sortKey: 'profitPerServing',
-    sortDir: 'desc',
+    sortDir: 'desc'
   });
 }
 
 // Derived: byId over all party-dishes for quick lookup
-export const partyDishByIdStore = derived(bundle, ($bundle) => ($bundle ? $bundle.byId : (null as unknown as Record<Id, PartyDish> | null)));
+export const partyDishByIdStore = derived(bundle, ($bundle) =>
+  $bundle ? $bundle.byId : (null as unknown as Record<Id, PartyDish> | null)
+);
 
 // Build per-party sub-bundles from the full party-dishes bundle
 export const dishesByPartyStore = derived(bundle, ($bundle) => {
   if (!$bundle) return null as Record<Id, PartiesDishSubBundle> | null;
-  const map: Record<Id, PartiesDishSubBundle> = Object.create(null) as Record<Id, PartiesDishSubBundle>;
+  const map: Record<Id, PartiesDishSubBundle> = Object.create(null) as Record<
+    Id,
+    PartiesDishSubBundle
+  >;
   const partyFacet = $bundle.facets?.party ?? {};
   for (const [partyKey, pdIds] of Object.entries(partyFacet)) {
     const rows = pdIds.map((id) => $bundle.byId[id]).filter(Boolean) as PartyDish[];

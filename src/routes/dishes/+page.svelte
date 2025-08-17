@@ -72,7 +72,10 @@
 
 <svelte:head>
   <title>Dishes - Bancho Box</title>
-  <meta name="description" content="Complete dish collection from Dave the Diver with comprehensive profit analysis" />
+  <meta
+    name="description"
+    content="Complete dish collection from Dave the Diver with comprehensive profit analysis"
+  />
 </svelte:head>
 
 <ResponsiveLayout leftTitle="Filters & sort" containerClass="dishes">
@@ -93,16 +96,25 @@
 
     <div class="h-[70dvh] md:h-full">
       <div bind:this={viewport} class="h-full overflow-y-auto" onscroll={onScroll}>
-        <div class="flex flex-col gap-4" style={`padding-top: ${paddingTop}px; padding-bottom: ${paddingBottom}px;`}>
-          <ResultsHeader visible={visible} entityLabel="Dishes" bind:sortKey={$sortKey as string} bind:sortDir={$sortDir} sortOptions={[
-            { value: 'name', label: 'Recipe' },
-            { value: 'finalPrice', label: 'Final Price' },
-            { value: 'finalServings', label: 'Final Servings' },
-            { value: 'finalProfitPerServing', label: 'Profit / Serving' },
-            { value: 'maxProfitPerServing', label: 'Max Profit / Serving' },
-            { value: 'upgradeCost', label: 'Upgrade Cost' },
-            { value: 'ingredientCount', label: 'Ingredients' },
-          ]} />
+        <div
+          class="flex flex-col gap-4"
+          style={`padding-top: ${paddingTop}px; padding-bottom: ${paddingBottom}px;`}
+        >
+          <ResultsHeader
+            {visible}
+            entityLabel="Dishes"
+            bind:sortKey={$sortKey as string}
+            bind:sortDir={$sortDir}
+            sortOptions={[
+              { value: 'name', label: 'Recipe' },
+              { value: 'finalPrice', label: 'Final Price' },
+              { value: 'finalServings', label: 'Final Servings' },
+              { value: 'finalProfitPerServing', label: 'Profit / Serving' },
+              { value: 'maxProfitPerServing', label: 'Max Profit / Serving' },
+              { value: 'upgradeCost', label: 'Upgrade Cost' },
+              { value: 'ingredientCount', label: 'Ingredients' }
+            ]}
+          />
           {#each $visible.slice(startIndex, endIndex) as dish (dish.id)}
             <Dish {dish} />
           {/each}
@@ -112,6 +124,9 @@
   {/snippet}
 
   {#snippet right()}
-    <TrackingSidebar {tracked} on:toggleTrack={(e) => trackedDishIds.toggle(e.detail as unknown as number)} />
+    <TrackingSidebar
+      {tracked}
+      on:toggleTrack={(e) => trackedDishIds.toggle(e.detail as unknown as number)}
+    />
   {/snippet}
 </ResponsiveLayout>

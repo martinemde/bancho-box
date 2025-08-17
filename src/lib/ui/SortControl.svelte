@@ -2,9 +2,16 @@
   import { ArrowDown, ArrowUp } from '@lucide/svelte';
 
   type SortDirection = 'asc' | 'desc';
-  interface SortOption { value: string; label: string }
+  interface SortOption {
+    value: string;
+    label: string;
+  }
 
-  let { options = [], column = $bindable(''), direction = $bindable<SortDirection>('asc') } = $props();
+  let {
+    options = [],
+    column = $bindable(''),
+    direction = $bindable<SortDirection>('asc')
+  } = $props();
 
   function toggleDirection() {
     direction = direction === 'asc' ? 'desc' : 'asc';
@@ -19,7 +26,7 @@
 <div class="input-group inline-grid w-auto grid-cols-[auto_auto]">
   <button
     type="button"
-    class="ig-cell preset-tonal cursor-pointer select-none"
+    class="ig-cell cursor-pointer preset-tonal select-none"
     aria-label="Toggle sort direction"
     title={direction === 'asc' ? 'Ascending' : 'Descending'}
     onclick={toggleDirection}
@@ -31,7 +38,12 @@
     {/if}
   </button>
 
-  <select class="ig-select w-auto" bind:value={column} onchange={handleSelectChange} aria-label="Sort by">
+  <select
+    class="ig-select w-auto"
+    bind:value={column}
+    onchange={handleSelectChange}
+    aria-label="Sort by"
+  >
     {#each options as opt}
       <option value={opt.value}>{opt.label}</option>
     {/each}

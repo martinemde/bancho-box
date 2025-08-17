@@ -26,7 +26,7 @@
   }
 </script>
 
-<div class="overflow-x-auto mt-2 -mx-4">
+<div class="-mx-4 mt-2 overflow-x-auto">
   <table class="w-full table-auto text-sm">
     <thead class="bg-surface-200-800">
       <tr>
@@ -39,13 +39,13 @@
     <tbody>
       {#each ingredientRows as row}
         <tr class="border-b border-surface-200-800">
-          <td class="pl-4 w-8">
+          <td class="w-8 pl-4">
             <div class="relative" style="width: 32px; height: 32px">
               <PixelIcon image={row.image} alt={row.name} uiScale={0.5} />
             </div>
           </td>
           <td class="p-2">{row.name}</td>
-          <td class="p-2 text-left tabular-nums gap-x-2">
+          <td class="gap-x-2 p-2 text-left tabular-nums">
             {#if row.icon}
               {@const Icon = row.icon}
               <span class="inline-flex items-center gap-x-1">
@@ -64,10 +64,10 @@
     </tbody>
     <tfoot>
       <tr class="bg-surface-200-800 font-semibold">
-        <td class="pl-4 p-2 uppercase text-xs" colspan="2">Recipe Cost</td>
+        <td class="p-2 pl-4 text-xs uppercase" colspan="2">Recipe Cost</td>
         <td class="p-2 text-left tabular-nums">{dish.ingredientCount}</td>
         <td class="p-2 text-right tabular-nums">{formatNumber(dish.recipeCost)}</td>
-        <td class="pr-4 p-2 text-right tabular-nums">{formatNumber(dish.upgradeCost)}</td>
+        <td class="p-2 pr-4 text-right tabular-nums">{formatNumber(dish.upgradeCost)}</td>
         <td></td>
       </tr>
     </tfoot>

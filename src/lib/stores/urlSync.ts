@@ -52,6 +52,8 @@ export function syncToUrl(namespace: string, stores: Stores) {
   };
 
   // Subscribe to stores
-  const unsubs = [stores.query, stores.sortKey, stores.sortDir, stores.filters].map((s) => s.subscribe(update));
+  const unsubs = [stores.query, stores.sortKey, stores.sortDir, stores.filters].map((s) =>
+    s.subscribe(update)
+  );
   return () => unsubs.forEach((u) => u());
 }

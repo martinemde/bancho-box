@@ -24,21 +24,25 @@
 
 <svelte:head>
   <title>Parties - Bancho Box</title>
-  <meta name="description" content="Complete party collection from Dave the Diver with calculated profit analysis" />
+  <meta
+    name="description"
+    content="Complete party collection from Dave the Diver with calculated profit analysis"
+  />
 </svelte:head>
-
-
-
 
 <ResponsiveLayout leftTitle="Filters & sort" containerClass="parties" scrollMode="container">
   {#snippet left()}
     <FiltersPanel
-      bundle={bundle}
+      {bundle}
       {filters}
       bind:query={$query}
       bind:sortKey={$sortKey as string}
       bind:sortDir={$sortDir}
-      sortOptions={[{ value: 'name', label: 'Name' }, { value: 'bonus', label: 'Bonus' }, { value: 'dishCount', label: 'Dish Count' }]}
+      sortOptions={[
+        { value: 'name', label: 'Name' },
+        { value: 'bonus', label: 'Bonus' },
+        { value: 'dishCount', label: 'Dish Count' }
+      ]}
       searchPlaceholder="Search parties…"
     />
   {/snippet}
@@ -47,7 +51,7 @@
     <div class="flex flex-col gap-4">
       {#each $visible as party (party.id)}
         {#if $dishesByPartyStore?.[party.id]}
-          <PartyGroup party={party} subBundle={$dishesByPartyStore[party.id]} />
+          <PartyGroup {party} subBundle={$dishesByPartyStore[party.id]} />
         {/if}
       {/each}
     </div>

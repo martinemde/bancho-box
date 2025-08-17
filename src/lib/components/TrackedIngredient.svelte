@@ -39,7 +39,9 @@
   $: totalUpgrade = usages.reduce((sum, u) => sum + u.upgrade, 0);
 </script>
 
-<article class="card preset-filled-surface-100-900 border border-surface-200-800 divide-y divide-surface-200-800">
+<article
+  class="divide-y divide-surface-200-800 card border border-surface-200-800 preset-filled-surface-100-900"
+>
   <!-- Section 1: Overview (styled after Ingredient) -->
   <section class="p-4">
     <div class="flex items-start gap-4">
@@ -56,16 +58,16 @@
         </div>
       </div>
 
-      <div class="flex-1 min-w-0 space-y-2">
+      <div class="min-w-0 flex-1 space-y-2">
         <div class="flex items-center gap-2">
-          <h3 class="h5 m-0 truncate !leading-none">{ingredient.name}</h3>
+          <h3 class="m-0 truncate h5 !leading-none">{ingredient.name}</h3>
         </div>
 
-        <div class="mt-1 *:text-xs opacity-80 flex flex-wrap items-center gap-x-3 gap-y-1">
+        <div class="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 opacity-80 *:text-xs">
           <span>{ingredient.source}</span>
         </div>
 
-        <div class="mt-1 text-sm flex flex-wrap items-center gap-x-3 gap-y-1">
+        <div class="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
           <span>Sell: {ingredient.sell != null ? `${formatNumber(ingredient.sell)}g` : '—'}</span>
           <span>Buy: —</span>
           {#if ingredient.kg != null}
@@ -81,7 +83,7 @@
     {#if usages.length === 0}
       <div class="text-sm opacity-70">Not used by any tracked dishes.</div>
     {:else}
-      <div class="overflow-x-auto mt-2">
+      <div class="mt-2 overflow-x-auto">
         <table class="w-full table-auto text-sm">
           <thead class="bg-surface-200-800">
             <tr>
@@ -101,7 +103,7 @@
           </tbody>
           <tfoot>
             <tr class="bg-surface-200-800 font-semibold">
-              <td class="p-2 uppercase text-xs">Totals</td>
+              <td class="p-2 text-xs uppercase">Totals</td>
               <td class="p-2 text-center tabular-nums">{totalQty}</td>
               <td class="p-2 text-center tabular-nums">{totalUpgrade}</td>
             </tr>

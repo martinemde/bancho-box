@@ -9,7 +9,7 @@ import type {
   Party,
   DishIngredient,
   DishParty,
-  Id,
+  Id
 } from '../../src/lib/types.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -74,7 +74,7 @@ const dishesRowSchema = z
     final_servings: intFromString('final_servings'),
     unlock: optionalString,
     dlc: optionalString,
-    artisans_flames: optionalNumber,
+    artisans_flames: optionalNumber
   })
   .transform((row) => ({
     id: row['id'],
@@ -89,7 +89,7 @@ const dishesRowSchema = z
     finalServings: row['final_servings'],
     unlock: row['unlock'] ?? null,
     dlc: row['dlc'] ?? null,
-    artisansFlames: row['artisans_flames'] as number | null,
+    artisansFlames: row['artisans_flames'] as number | null
   }));
 
 // Ingredients CSV schema -> normalized row (camelCase)
@@ -117,7 +117,7 @@ const ingredientsRowSchema = z
     sell: optionalNumber,
     source: z.string().transform((s) => s.trim()),
     steelnet: optionalBoolean,
-    type: z.string().transform((s) => s.trim()),
+    type: z.string().transform((s) => s.trim())
   })
   .transform((row) => ({
     id: row['id'],
@@ -142,7 +142,7 @@ const ingredientsRowSchema = z
     sell: row['sell'] as number | null,
     source: row['source'],
     steelnet: row['steelnet'],
-    type: row['type'],
+    type: row['type']
   }));
 
 // Parties CSV schema -> normalized row (camelCase)
@@ -151,13 +151,13 @@ const partiesRowSchema = z
     id: intFromString('id'),
     order: intFromString('order'),
     name: z.string().transform((s) => s.trim()),
-    bonus: floatFromString('bonus'),
+    bonus: floatFromString('bonus')
   })
   .transform((row) => ({
     id: row['id'],
     order: row['order'],
     name: row['name'],
-    bonus: row['bonus'],
+    bonus: row['bonus']
   }));
 
 // Dish-Ingredients CSV schema -> normalized row (camelCase)
@@ -167,32 +167,32 @@ const dishIngredientsRowSchema = z
     count: intFromString('count'),
     ingredient: z.string().transform((s) => s.trim()),
     levels: intFromString('levels'),
-    upgrade_count: intFromString('upgrade_count'),
+    upgrade_count: intFromString('upgrade_count')
   })
   .transform((row) => ({
     dish: row['dish'],
     ingredient: row['ingredient'],
     count: row['count'],
     levels: row['levels'],
-    upgradeCount: row['upgrade_count'],
+    upgradeCount: row['upgrade_count']
   }));
 
 // Party-Dishes CSV schema -> normalized row
 const partyDishesRowSchema = z
   .object({
     party: z.string().transform((s) => s.trim()),
-    dish: z.string().transform((s) => s.trim()),
+    dish: z.string().transform((s) => s.trim())
   })
   .transform((row) => ({
     party: row['party'],
-    dish: row['dish'],
+    dish: row['dish']
   }));
 
 function parseTable<T>(csvContent: string, schema: z.ZodType<T>, filename: string): T[] {
   const records = parseCsv(csvContent, {
     columns: true,
     skip_empty_lines: true,
-    trim: true,
+    trim: true
   }) as Array<Record<string, string>>;
   if (records.length === 0) {
     console.warn(`${filename} has no data rows`);
@@ -236,7 +236,7 @@ function loadDishes() {
   const rawRecords = parseCsv(dishesCSV, {
     columns: true,
     skip_empty_lines: true,
-    trim: true,
+    trim: true
   }) as Array<Record<string, string>>;
   validateRequiredColumns(
     rawRecords,
@@ -253,7 +253,7 @@ function loadDishes() {
       'unlock',
       'dlc',
       'artisans_flames',
-      'image',
+      'image'
     ],
     'dishes.csv'
   );
@@ -271,11 +271,14 @@ function loadDishes() {
 }
 
 function loadIngredients() {
-  const ingredientsCSV = readFileSync(join(__dirname, '..', '..', 'data', 'ingredients.csv'), 'utf-8');
+  const ingredientsCSV = readFileSync(
+    join(__dirname, '..', '..', 'data', 'ingredients.csv'),
+    'utf-8'
+  );
   const rawRecords = parseCsv(ingredientsCSV, {
     columns: true,
     skip_empty_lines: true,
-    trim: true,
+    trim: true
   }) as Array<Record<string, string>>;
   validateRequiredColumns(
     rawRecords,
@@ -300,7 +303,7 @@ function loadParties() {
   const rawRecords = parseCsv(partiesCSV, {
     columns: true,
     skip_empty_lines: true,
-    trim: true,
+    trim: true
   }) as Array<Record<string, string>>;
   validateRequiredColumns(rawRecords, ['id', 'order', 'name', 'bonus'], 'parties.csv');
   const normalized = parseTable(partiesCSV, partiesRowSchema, 'parties.csv');
@@ -326,11 +329,14 @@ function loadRelationships(
   partyNameToId: Map<string, Id>
 ) {
   // Load party-dish relationships
-  const partyDishesCSV = readFileSync(join(__dirname, '..', '..', 'data', 'party-dishes.csv'), 'utf-8');
+  const partyDishesCSV = readFileSync(
+    join(__dirname, '..', '..', 'data', 'party-dishes.csv'),
+    'utf-8'
+  );
   const rawPartyDishRecords = parseCsv(partyDishesCSV, {
     columns: true,
     skip_empty_lines: true,
-    trim: true,
+    trim: true
   }) as Array<Record<string, string>>;
   validateRequiredColumns(rawPartyDishRecords, ['party', 'dish'], 'party-dishes.csv');
   const partyDishRows = parseTable(partyDishesCSV, partyDishesRowSchema, 'party-dishes.csv');
@@ -342,7 +348,7 @@ function loadRelationships(
     if (partyId && dishId) {
       dishParties.push({
         dishId: dishId,
-        partyId: partyId,
+        partyId: partyId
       });
     } else {
       console.warn(`\x1b[31mCould not find party "${row.party}" or dish "${row.dish}"\x1b[0m`);
@@ -350,18 +356,25 @@ function loadRelationships(
   }
 
   // Load dish-ingredient relationships
-  const dishIngredientsCSV = readFileSync(join(__dirname, '..', '..', 'data', 'dish-ingredients.csv'), 'utf-8');
+  const dishIngredientsCSV = readFileSync(
+    join(__dirname, '..', '..', 'data', 'dish-ingredients.csv'),
+    'utf-8'
+  );
   const rawDishIngRecords = parseCsv(dishIngredientsCSV, {
     columns: true,
     skip_empty_lines: true,
-    trim: true,
+    trim: true
   }) as Array<Record<string, string>>;
   validateRequiredColumns(
     rawDishIngRecords,
     ['dish', 'count', 'ingredient', 'levels', 'upgrade_count'],
     'dish-ingredients.csv'
   );
-  const dishIngredientRows = parseTable(dishIngredientsCSV, dishIngredientsRowSchema, 'dish-ingredients.csv');
+  const dishIngredientRows = parseTable(
+    dishIngredientsCSV,
+    dishIngredientsRowSchema,
+    'dish-ingredients.csv'
+  );
 
   const dishIngredients: DishIngredient[] = [];
   for (const row of dishIngredientRows) {
@@ -373,10 +386,12 @@ function loadRelationships(
         ingredientId: ingredientId,
         count: row.count,
         levels: row.levels,
-        upgradeCount: row.upgradeCount,
+        upgradeCount: row.upgradeCount
       });
     } else {
-      console.warn(`\x1b[31mCould not find dish "${row.dish}" or ingredient "${row.ingredient}"\x1b[0m`);
+      console.warn(
+        `\x1b[31mCould not find dish "${row.dish}" or ingredient "${row.ingredient}"\x1b[0m`
+      );
     }
   }
 

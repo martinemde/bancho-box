@@ -190,8 +190,4 @@ export type IngredientSortKey =
   | 'usedForPartiesCount';
 
 // Sort keys for EnrichedParty.sort
-export type PartySortKey =
-  | 'order'
-  | 'name'
-  | 'bonus'
-  | 'dishCount';
+export type PartySortKey = 'order' | 'name' | 'bonus' | 'dishCount';

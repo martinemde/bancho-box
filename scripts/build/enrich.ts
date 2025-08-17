@@ -10,7 +10,7 @@ import type {
   Ingredient,
   EnrichedParty,
   EntityBundle,
-  PartyDishSortKey,
+  PartyDishSortKey
 } from '../../src/lib/types.js';
 import { buildDishesBundle } from './dish_bundle.js';
 import { buildIngredientsBundle } from './ingredient_bundle.js';
@@ -46,7 +46,7 @@ export function enrichData(
         type,
         unitCost: ing.cost,
         lineCost: ing.cost * di.count,
-        upgradeCount: di.upgradeCount,
+        upgradeCount: di.upgradeCount
       };
     });
     const ingredientCount = ingredientLines.reduce((total, line) => total + line.count, 0);
@@ -63,7 +63,10 @@ export function enrichData(
     let maxProfitPerServing = finalProfitPerServing;
 
     const upgradeCost = ingredientLines.reduce(
-      (sum, line) => sum + (line.unitCost != null ? line.unitCost : 0) * (line.upgradeCount != null ? line.upgradeCount : 0),
+      (sum, line) =>
+        sum +
+        (line.unitCost != null ? line.unitCost : 0) *
+          (line.upgradeCount != null ? line.upgradeCount : 0),
       0
     );
 
@@ -71,9 +74,7 @@ export function enrichData(
     const ingredientNames = ingredientLines
       .map((l) => basicIngredients.find((i) => i.id === l.ingredientId)?.name || '')
       .filter(Boolean);
-    const search = [dish.name, dish.dlc, dish.unlock, ...ingredientNames]
-      .map(normalize)
-      .join(' ');
+    const search = [dish.name, dish.dlc, dish.unlock, ...ingredientNames].map(normalize).join(' ');
 
     for (const partyId of partyIds) {
       const party = basicParties.find((p) => p.id === partyId);
@@ -105,7 +106,7 @@ export function enrichData(
         upgradeCost,
         ingredientCount,
         partyBonus: party.bonus,
-        partyName: party.name,
+        partyName: party.name
       } as const;
 
       const pd: PartyDish = {
@@ -127,7 +128,7 @@ export function enrichData(
         partyId,
         dishId: dish.id,
         partyName: party.name,
-        partyBonus: party.bonus,
+        partyBonus: party.bonus
       };
 
       localPartyDishes.push(pd);
@@ -151,7 +152,7 @@ export function enrichData(
       maxProfitPerServing,
       recipeCost,
       upgradeCost,
-      ingredientCount,
+      ingredientCount
     } as const;
 
     const enrichedDish: Dish = {
@@ -169,7 +170,7 @@ export function enrichData(
       // Persist raw filename from CSV for top-level dish image
       image: dish.image,
       search,
-      sort,
+      sort
     };
 
     return enrichedDish;
@@ -207,43 +208,45 @@ export function enrichData(
           price: dish.finalPrice,
           revenue: dish.finalPrice * dish.finalServings,
           servings: dish.finalServings,
-          partyNames,
-        }
+          partyNames
+        };
       })
-      .sort((a, b) => (b.revenue / b.count) - (a.revenue / a.count));
+      .sort((a, b) => b.revenue / b.count - a.revenue / a.count);
 
     const sell = ingredient.sell ?? null;
     const meats = ingredient.maxMeats ?? null;
     const kg = ingredient.kg ?? null;
     let sellPerKg: number | undefined = undefined;
     if (sell != null && meats != null && kg != null && kg !== 0) {
-      sellPerKg = sell * meats / kg;
+      sellPerKg = (sell * meats) / kg;
     }
 
     const vendors = {} as Record<string, number>;
     if (ingredient.buyOtto != null) vendors['Otto'] = ingredient.buyOtto;
     if (ingredient.buyJango != null) vendors['Jango'] = ingredient.buyJango;
 
-    const buy = Object.values(vendors).reduce((min, v) => (v != null && v < min ? v : min), Infinity);
+    const buy = Object.values(vendors).reduce(
+      (min, v) => (v != null && v < min ? v : min),
+      Infinity
+    );
 
     const search = [
       ingredient.name,
       ingredient.source,
       ingredient.type,
       ...partyNames,
-      ...(partyNames.size > 0 ? ['party'] : []),
+      ...(partyNames.size > 0 ? ['party'] : [])
     ]
       .map(normalize)
       .filter(Boolean)
       .join(' ');
-
 
     const sort = {
       name: normalize(ingredient.name),
       buy,
       sell,
       kg,
-      sellPerKg,
+      sellPerKg
     } as const;
 
     const finalIngredient: Ingredient = {
@@ -253,7 +256,7 @@ export function enrichData(
       sellPerKg,
       vendors,
       search,
-      sort: sort as unknown as Ingredient['sort'],
+      sort: sort as unknown as Ingredient['sort']
     };
 
     return finalIngredient;
@@ -276,8 +279,8 @@ export function enrichData(
         name: party.name.toLowerCase(),
         bonus: party.bonus,
         dishCount: partyDishIds.length,
-        order: party.order,
-      },
+        order: party.order
+      }
     } as EnrichedParty;
 
     return enrichedParty;

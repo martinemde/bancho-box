@@ -10,7 +10,7 @@
     { value: 'finalProfitPerServing', label: 'Profit / Serving' },
     { value: 'maxProfitPerServing', label: 'Max Profit / Serving' },
     { value: 'upgradeCost', label: 'Upgrade Cost' },
-    { value: 'ingredientCount', label: 'Ingredients' },
+    { value: 'ingredientCount', label: 'Ingredients' }
   ];
 
   let {
@@ -18,7 +18,7 @@
     filters,
     query = $bindable(''),
     sortKey = $bindable<string>('finalProfitPerServing'),
-    sortDir = $bindable<'asc'|'desc'>('desc'),
+    sortDir = $bindable<'asc' | 'desc'>('desc'),
     sortOptions,
     searchPlaceholder
   }: {
@@ -26,7 +26,7 @@
     filters: Writable<Record<string, Set<string>>>;
     query?: string;
     sortKey?: string;
-    sortDir?: 'asc'|'desc';
+    sortDir?: 'asc' | 'desc';
     sortOptions?: Array<{ value: string; label: string }>;
     searchPlaceholder?: string;
   } = $props();
@@ -39,8 +39,10 @@
     filters.update((current: Record<string, Set<string>>) => {
       const next: Record<string, Set<string>> = { ...current };
       const set = new Set(next[facet] ?? []);
-      if (checked) set.add(value); else set.delete(value);
-      if (set.size > 0) next[facet] = set; else delete next[facet];
+      if (checked) set.add(value);
+      else set.delete(value);
+      if (set.size > 0) next[facet] = set;
+      else delete next[facet];
       return next;
     });
   }
@@ -49,7 +51,7 @@
 
   // Collapsible facets state: only first category expanded by default
   let expanded = $state<Record<string, boolean>>({});
-  const facetEntries = $derived(Object.entries(($bundle?.facets ?? {})));
+  const facetEntries = $derived(Object.entries($bundle?.facets ?? {}));
   // Precompute sorted keys per facet to avoid sorting in template
   const sortedFacetKeys: Record<string, string[]> = $derived(
     Object.fromEntries(
@@ -74,10 +76,13 @@
     if (names.length === 0) return;
     const hasAny = Object.keys(expanded).length > 0;
     if (!hasAny) {
-      expanded = names.reduce((acc, name, idx) => {
-        acc[name] = idx === 0; // first open, others collapsed
-        return acc;
-      }, {} as Record<string, boolean>);
+      expanded = names.reduce(
+        (acc, name, idx) => {
+          acc[name] = idx === 0; // first open, others collapsed
+          return acc;
+        },
+        {} as Record<string, boolean>
+      );
     }
     for (const name of names) if (!(name in expanded)) expanded[name] = false;
     for (const key of Object.keys(expanded)) if (!names.includes(key)) delete expanded[key];
@@ -123,12 +128,13 @@
       </legend>
       {#if expanded[facetName]}
         <div id={facetPanelId(facetName)} class="space-y-1">
-          {#each (sortedFacetKeys[facetName] ?? []) as key}
+          {#each sortedFacetKeys[facetName] ?? [] as key}
             <label class="flex items-center gap-2 text-sm">
               <input
                 type="checkbox"
                 checked={isChecked(facetName, key)}
-                onchange={(e) => toggleFacet(facetName, key, (e.currentTarget as HTMLInputElement).checked)}
+                onchange={(e) =>
+                  toggleFacet(facetName, key, (e.currentTarget as HTMLInputElement).checked)}
               />
               {key}
             </label>
@@ -147,7 +153,10 @@
     background-color: rgb(var(--color-surface-50));
     color: rgb(var(--color-on-surface-token));
     caret-color: rgb(var(--color-primary-500));
-    transition: background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      box-shadow 150ms ease;
   }
   .search-input::placeholder {
     color: rgb(var(--color-on-surface-token) / 0.55);
@@ -176,7 +185,9 @@
     padding: 0 0.25rem;
     cursor: pointer;
     opacity: 0.7;
-    transition: color 150ms ease, opacity 150ms ease;
+    transition:
+      color 150ms ease,
+      opacity 150ms ease;
   }
   .clear-btn:hover {
     opacity: 1;

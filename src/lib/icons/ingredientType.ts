@@ -11,7 +11,7 @@ import {
   Shrimp,
   Skull,
   Snowflake,
-  Wheat,
+  Wheat
 } from '@lucide/svelte';
 
 // Centralized mapping of ingredient type/source to an icon component

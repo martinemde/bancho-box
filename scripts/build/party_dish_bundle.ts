@@ -7,7 +7,7 @@ export function buildPartyDishesBundle(partyDishes: PartyDish[]): EntityBundle<P
     party: {},
     dish: {},
     dlc: {},
-    unlock: {},
+    unlock: {}
   };
 
   for (const pd of partyDishes) {
@@ -27,6 +27,6 @@ export function buildPartyDishesBundle(partyDishes: PartyDish[]): EntityBundle<P
   return {
     rows: partyDishes,
     byId,
-    facets,
+    facets
   };
 }

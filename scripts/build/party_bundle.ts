@@ -10,6 +10,6 @@ export function buildPartiesBundle(parties: EnrichedParty[]): EntityBundle<Enric
   return {
     rows: parties,
     byId,
-    facets: partyFacets,
+    facets: partyFacets
   };
 }

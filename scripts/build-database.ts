@@ -18,7 +18,7 @@ try {
     dishIngredients,
     dishParties
   );
-  exportData({dishesBundle, ingredientsBundle, partiesBundle, partyDishesBundle});
+  exportData({ dishesBundle, ingredientsBundle, partiesBundle, partyDishesBundle });
   console.log('Build completed successfully!');
 } catch (error) {
   console.error('Build failed:', error);

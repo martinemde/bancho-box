@@ -6,7 +6,6 @@
 </script>
 
 <div class="flex items-start gap-x-4 px-4">
-    <div class="w-24 shrink-0">
-    </div>
-    <ProfitTable dish={partyDish} />
+  <div class="w-24 shrink-0"></div>
+  <ProfitTable dish={partyDish} />
 </div>

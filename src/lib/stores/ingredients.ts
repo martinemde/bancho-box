@@ -3,7 +3,7 @@ import type { Ingredient } from '$lib/types.js';
 
 export const ingredientsStores = createEntityStores<Ingredient>({
   sortKey: 'sellPerKg',
-  sortDir: 'desc',
+  sortDir: 'desc'
 });
 
 export const bundle = ingredientsStores.bundle;

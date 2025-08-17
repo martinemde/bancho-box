@@ -6,9 +6,9 @@ export function buildDishesBundle(dishes: Dish[]): EntityBundle<Dish> {
 
   // Facets - minimal set to start; structure is easy to extend
   const facets: EntityBundle<Dish>['facets'] = {
-    "DLC": {},
-    "Unlock": {},
-    "Ingredient": {},
+    DLC: {},
+    Unlock: {},
+    Ingredient: {}
   };
 
   for (const d of dishes) {
@@ -33,6 +33,6 @@ export function buildDishesBundle(dishes: Dish[]): EntityBundle<Dish> {
   return {
     rows: dishes,
     byId,
-    facets,
+    facets
   };
 }

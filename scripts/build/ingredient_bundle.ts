@@ -5,13 +5,13 @@ export function buildIngredientsBundle(ingredients: Ingredient[]): EntityBundle<
 
   // Minimal, useful facets (no hasIngredient)
   const facets: EntityBundle<Ingredient>['facets'] = {
-    "Type": {}, // e.g. 'fish', 'vegetable', etc.
-    "Source": {}, // e.g. 'Glacial Passage', 'Vegetable Farm', ...
-    "Time": {}, // 'day','night','fog' flags mapped to ids
-    "Vendor": {}, // 'jango', 'otto' based on presence of buy price
-    "Catch": {}, // 'crabtrap', 'bugnet', 'gloves' based on presence of capture flags
-    "Aberration": {}, // 'yes' when ingredient.aberration === true
-    "Farm": {}, // 'gumo', 'otto'
+    Type: {}, // e.g. 'fish', 'vegetable', etc.
+    Source: {}, // e.g. 'Glacial Passage', 'Vegetable Farm', ...
+    Time: {}, // 'day','night','fog' flags mapped to ids
+    Vendor: {}, // 'jango', 'otto' based on presence of buy price
+    Catch: {}, // 'crabtrap', 'bugnet', 'gloves' based on presence of capture flags
+    Aberration: {}, // 'yes' when ingredient.aberration === true
+    Farm: {} // 'gumo', 'otto'
   };
 
   for (const i of ingredients) {

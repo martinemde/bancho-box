@@ -3,7 +3,7 @@ import type { Dish } from '$lib/types.js';
 
 export const dishesStores = createEntityStores<Dish>({
   sortKey: 'finalProfitPerServing',
-  sortDir: 'desc',
+  sortDir: 'desc'
 });
 
 export const bundle = dishesStores.bundle;

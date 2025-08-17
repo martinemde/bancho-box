@@ -6,7 +6,9 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   var __SVELTEKIT_PAYLOAD__: any | undefined;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  interface Window { __SVELTEKIT_PAYLOAD__?: any }
+  interface Window {
+    __SVELTEKIT_PAYLOAD__?: any;
+  }
 }
 
 if (typeof globalThis.__SVELTEKIT_PAYLOAD__ === 'undefined') {

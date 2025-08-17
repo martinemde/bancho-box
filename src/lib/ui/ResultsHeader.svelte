@@ -22,10 +22,9 @@
 </script>
 
 <div class="flex items-center justify-between gap-3 py-2">
-  <div class="text-sm md:text-base font-semibold select-none">{count} {entityLabel}</div>
+  <div class="text-sm font-semibold select-none md:text-base">{count} {entityLabel}</div>
   <div class="flex items-center gap-2">
     <span class="text-xs opacity-80">Sort by</span>
     <SortControl options={sortOptions} bind:column={sortKey} bind:direction={sortDir} />
   </div>
-
 </div>

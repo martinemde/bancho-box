@@ -91,6 +91,6 @@ export function buildGraph(
     ingByDishId,
     dishesByIngredientId,
     partiesByDishId,
-    dishesByPartyId,
+    dishesByPartyId
   };
 }
